@@ -1,0 +1,3 @@
+[submodule "scenario-service"]
+	path = scenario-service
+	url = git@github.com:karen-ho/scenario-service.git
