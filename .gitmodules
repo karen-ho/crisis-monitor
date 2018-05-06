@@ -1,6 +1,3 @@
 [submodule "scenario-service"]
 	path = scenario-service
 	url = git@github.com:karen-ho/scenario-service.git
-[submodule "crisis-monitor-2"]
-	path = crisis-monitor-2
-	url = https://git.heroku.com/crisis-monitor-2.git
