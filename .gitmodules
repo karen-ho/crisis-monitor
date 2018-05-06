@@ -1,3 +1,6 @@
 [submodule "scenario-service"]
 	path = scenario-service
 	url = git@github.com:karen-ho/scenario-service.git
+[submodule "crisis-server"]
+	path = crisis-server
+	url = git@github.com:karen-ho/crisis-server.git
