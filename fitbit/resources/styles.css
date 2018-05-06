@@ -10,3 +10,13 @@
   text-anchor: middle;
   text-length: 99;
 }
+
+#help {
+  display: none;
+}
+#stillalive {  
+  display: none;
+}
+#message {
+  display: none;
+}

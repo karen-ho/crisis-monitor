@@ -1,3 +1,19 @@
-<svg class="background">
-  <text id="demotext" x="50%" y="50%+15">Need Help?</text>
+<svg class="background">    
+  <use id="message" href="#mixed-text-center-mid" class="dialog-mixed-text" fill="fb-white">
+    <set href="#top-padding" attributeName="display" to="none" />
+    <set href="#header/text" attributeName="text-buffer" to="Overdose Detected" />
+    <set href="#header/text" attributeName="fill" to="fb-magenta"/>
+    <set href="#copy/text" attributeName="text-buffer" to="Emergency services will be contacted in 5 seconds." />
+    <set href="#bottom-padding" attributeName="display" to="none" />
+  </use>
+
+  <use id="stillalive" class="dialog-half-button-left" href="#square-button-neutral">
+    <set href="#text" attributeName="text-buffer" to="Cancel." />
+    <set href="#text" attributeName="text-anchor" to="middle" />
+  </use>
+  
+  <use id="help" href="#mixed-text-center-mid" height="100%" fill="fb-yellow">
+    <set href="#header/text" attributeName="text-buffer" to="" />
+    <set href="#copy/text" attributeName="text-buffer" to="Emergency services are on their way." />
+  </use>
 </svg>

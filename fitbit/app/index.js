@@ -5,6 +5,7 @@ import { Accelerometer } from "accelerometer";
 import { Barometer } from "barometer";
 import { Gyroscope } from "gyroscope";
 import * as messaging from "messaging";
+import { vibration } from "haptics";
 
 var location = null;
 let heartRateMonitor = new HeartRateSensor();
@@ -22,14 +23,28 @@ if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
 }
 
 messaging.peerSocket.onmessage = function (evt) {
+  console.log('did the watch get a message from companion?');
   if (evt.data === 'ping') {
     console.log('ping heard');
     sendData();
     return;
   }
+  
+  if (evt.data && evt.data.status === 3) {
+    console.log('od case');
+    sendWarning();
+    return;
+  }
 
   console.log('heard this from the companion');
   console.log(evt);
+};
+
+const message = document.getElementById('message');
+const help = document.getElementById('help');
+const stillalive = document.getElementById('stillalive');
+stillalive.onactivate = function(evt) {
+  timeout && clearInterval(timeout);
 };
 
 function sendData() {
@@ -71,4 +86,23 @@ function setLocation(position) {
   console.log('got the current position?');
   console.log(location.latitude);
   console.log(location.longitude);
+}
+
+var timeout = 0;
+
+function sendWarning() {
+  timeout = setTimeout(() => {
+    const status = 'create-care';
+    messaging.peerSocket.send({ status , location });
+
+    stillalive.style.display = 'none';
+    message.style.display = 'none';
+    help.style.display = 'inline';
+
+    vibration.stop();
+  }, 5000);
+
+  message.style.display = 'inline';
+  stillalive.style.display = 'inline';
+  vibration.start('nudge-max');
 }
