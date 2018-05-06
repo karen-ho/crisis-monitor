@@ -6,26 +6,28 @@ import { Barometer } from "barometer";
 import { Gyroscope } from "gyroscope";
 import * as messaging from "messaging";
 
-const INTERVAL = 1000;
-
-let demotext = document.getElementById("demotext");
-demotext.text = "Monitoring for Crises";
-
-let location = null;
+var location = null;
 let heartRateMonitor = new HeartRateSensor();
 let accel = new Accelerometer({ frequency: 1 });
 let bar = new Barometer({ frequency: 1 });
 let gyro = new Gyroscope({ frequency: 1 });
 
-geolocation.getCurrentPosition((position) => location = position.coords, () => null);
+geolocation.getCurrentPosition(setLocation, (error) => console.log(error));
+geolocation.watchPosition(setLocation, (error) => console.log(error));
 
 if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
-  onOpen()
+  onOpen();
 } else {
   messaging.peerSocket.onopen = onOpen;
 }
 
 messaging.peerSocket.onmessage = function (evt) {
+  if (evt.data === 'ping') {
+    console.log('ping heard');
+    sendData();
+    return;
+  }
+
   console.log('heard this from the companion');
   console.log(evt);
 };
@@ -58,5 +60,15 @@ function onOpen() {
   accel.start();
   bar.start();
   gyro.start();
-  setInterval(sendData, INTERVAL);
+}
+
+function setLocation(position) {
+  location = { latitude: position.coords.latitude*1, longitude: position.coords.longitude*1 };
+  if (!location.latitude || !location.longitude) {
+    return;
+  }
+
+  console.log('got the current position?');
+  console.log(location.latitude);
+  console.log(location.longitude);
 }
