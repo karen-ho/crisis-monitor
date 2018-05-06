@@ -1,0 +1,6 @@
+framework module Pods_Nopioids {
+  umbrella header "Pods-Nopioids-umbrella.h"
+
+  export *
+  module * { export * }
+}
